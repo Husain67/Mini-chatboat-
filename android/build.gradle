@@ -19,22 +19,16 @@ allprojects {
 rootProject.buildDir = "../build"
 subprojects {
     afterEvaluate { project ->
-        if (project.hasProperty("kotlin")) {
-            project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-                kotlinOptions {
-                    jvmTarget = "1.8"
-                }
-            }
-        }
-    }
-} 
- 
-subprojects {
-    afterEvaluate { project ->
-        if (project.plugins.hasPlugin("com.android.application") ||
-                project.plugins.hasPlugin("com.android.library")) {
+        if (project.plugins.hasPlugin("android") || project.plugins.hasPlugin("android.library")) {
             project.android {
-                compileSdkVersion 35
+                compileSdkVersion 36
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_17
+                    targetCompatibility = JavaVersion.VERSION_17
+                }
+                kotlinOptions {
+                    jvmTarget = "17"
+                }
             }
         }
         if (project.hasProperty('android')) {
